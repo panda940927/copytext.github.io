@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本複製器</title>
+    <style>
+        /* 自訂樣式 */
+        input[type="text"], input[type="number"], button {
+            width: 200px; /* 設置寬度 */
+            height: 30px; /* 設置高度 */
+            margin: 5px 0; /* 添加外邊距 */
+        }
+    </style>
+</head>
+<body>
+    <h1>文字複製系統</h1>
+    <label for="inputText">輸入文字:</label>
+    <input type="text" id="inputText"><br>
+    <label for="copyTimes">複製次數:</label>
+    <input type="number" id="copyTimes" min="1"><br>
+    <button onclick="copyText()">執行</button>
+    <div id="outputText"></div>
+    <button id="copyToClipboard" onclick="copyToClipboard()">複製到剪貼板</button>
+
+    <script>
+        function copyText() {
+            var inputText = document.getElementById("inputText").value;
+            var copyTimes = document.getElementById("copyTimes").value;
+            var outputText = "";
+
+            if (inputText && copyTimes > 0) {
+                for (var i = 0; i < copyTimes; i++) {
+                    outputText += inputText;
+                }
+            } else {
+                outputText = "請輸入有效的文字和複製次數。";
+            }
+
+            document.getElementById("outputText").textContent = outputText;
+        }
+
+        function copyToClipboard() {
+            var outputText = document.getElementById("outputText").textContent;
+
+            if (outputText) {
+                var textArea = document.createElement("textarea");
+                textArea.value = outputText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+    </script>
+</body>
+</html>
